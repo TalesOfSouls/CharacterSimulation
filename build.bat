@@ -1,5 +1,3 @@
-REM Run this script ONLY in start_build_terminal.bat OR the vs developer x64 command prompt
-
 cls
 
 IF NOT EXIST ..\build mkdir ..\build
@@ -19,6 +17,7 @@ cd ..\..\CharacterSimulation
 
 REM Copy data
 copy /y "settings.cfg" "..\build\simulation\settings.cfg"
+copy /y "..\EngineDependencies\sqlite\lib\x64\sqlite3.dll" "..\build\simulation\sqlite3.dll"
 
 REM Use /showIncludes for include debugging
 
@@ -39,4 +38,6 @@ cl ^
     /LIBPATH:"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/lib/x64" ^
     /LIBPATH:"C:/Program Files (x86)/Windows Kits/10/Lib/10.0.26100.0/um/x64" ^
     /LIBPATH:"C:/Program Files (x86)/Windows Kits/10/Lib/10.0.26100.0/ucrt/x64" ^
-    kernel32.lib user32.lib gdi32.lib winmm.lib
+    /LIBPATH:"../EngineDependencies/sqlite/lib/x64" ^
+    kernel32.lib user32.lib gdi32.lib winmm.lib ^
+    sqlite3.lib

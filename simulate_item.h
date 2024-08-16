@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include "SimulationDefinitions.h"
 
-void mutate_items_build(CharacterBuild*, float) {}
+void mutate_items_build(CharacterBuild*, float) {
+
+}
 
 #endif
