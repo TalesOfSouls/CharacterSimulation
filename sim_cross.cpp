@@ -3,9 +3,9 @@
 #include <time.h>
 #include <string.h>
 
+#include "../GameEngine/memory/Allocation.h"
 #include "../GameEngine/thread/Thread.h"
 #include "../GameEngine/stdlib/simd/SIMD_Helper.h"
-#include "../GameEngine/utils/Compiler.h"
 
 #if _WIN32
     #include "../GameEngine/platform/win32/UtilsWin32.h"
@@ -279,7 +279,7 @@ int main() {
     class_slot_equipment_types = (EquipmentType **) calloc(PLAYER_CLASS_SIZE * EQUIPMENT_SLOT_SIZE * 200, sizeof(EquipmentType *));
 
     // prepare data
-    BuildResult* results = (BuildResult *) calloc(config.classes_count * config.ranking_size, sizeof(BuildResult));
+    BuildResult* results = (BuildResult *) playform_alloc(config.classes_count * config.ranking_size * sizeof(BuildResult));
 
     printf("\nBuild Count: %d\n", config.classes_count * config.ranking_size * config.iterations);
     printf("Cache Size: %d\n", (int) (config.classes_count * config.ranking_size * sizeof(BuildResult)));
