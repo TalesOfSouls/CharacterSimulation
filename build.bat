@@ -1,7 +1,9 @@
 cls
+set "EXE_NAME=char_simulator_win32"
+set "DESTINATION_DIR=..\build\simulation"
 
 IF NOT EXIST ..\build mkdir ..\build
-IF NOT EXIST ..\build\simulation mkdir ..\build\simulation
+IF NOT EXIST "%DESTINATION_DIR%" mkdir "%DESTINATION_DIR%"
 
 if not defined DevEnvDir (call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat")
 
@@ -10,24 +12,45 @@ if "%Platform%" neq "x64" (
     exit /b 1
 )
 
-cd ..\build\simulation
+cd "%DESTINATION_DIR%"
 del *.pdb > NUL 2> NUL
 del *.idb > NUL 2> NUL
 cd ..\..\CharacterSimulation
 
 REM Copy data
-copy /y /d "settings.cfg" "..\build\simulation\settings.cfg"
-copy /y /d "..\EngineDependencies\sqlite\lib\x64\sqlite3.dll" "..\build\simulation\sqlite3.dll"
+copy /y /d "settings.cfg" "%DESTINATION_DIR%\settings.cfg"
+copy /y /d "..\EngineDependencies\sqlite\lib\x64\sqlite3.dll" "%DESTINATION_DIR%\sqlite3.dll"
 
 REM Use /showIncludes for include debugging
 
+set BUILD_TYPE=DEBUG
+set BUILD_FLAGS=/Od /Oi /Z7 /WX /FC /DDEBUG
+
+set "DEBUG_DATA=/Fd"%DESTINATION_DIR%\%EXE_NAME%.pdb" /Fm"%DESTINATION_DIR%\%EXE_NAME%.map""
+
+REM Parse command-line arguments
+if "%1"=="-r" (
+    set BUILD_TYPE=RELEASE
+    set BUILD_FLAGS=/O2 /D NDEBUG
+
+    set DEBUG_DATA=
+)
+if "%1"=="-d" (
+    set BUILD_TYPE=DEBUG
+    set BUILD_FLAGS=/Od /Oi /Z7 /WX /FC /DDEBUG
+
+    set "DEBUG_DATA=/Fd"%DESTINATION_DIR%\%EXE_NAME%.pdb" /Fm"%DESTINATION_DIR%\%EXE_NAME%.map""
+)
+
 REM Create main program
 cl ^
-    /MT /nologo /Gm- /GR- /EHsc /Od /Oi /WX /W4 /FC /Z7 /wd4201 ^
+    %BUILD_FLAGS% /MT /nologo /Gm- /GR- /EHsc /W4 /wd4201 /wd4706 ^
+    /wd4018 /wd4389 /wd4100 /wd4244 /wd4189 ^
     /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++20 ^
-    /D WIN32 /D _WINDOWS /D _UNICODE /D UNICODE /D _CRT_SECURE_NO_WARNINGS ^
-    /Fo"../build/simulation/" /Fe"../build/simulation/sim_cross.exe" /Fd"../build/simulation/sim_cross.pdb" /Fm"../build/simulation/sim_cross.map" ^
-    "sim_cross.cpp"^
+    /D WIN32 /D _WINDOWS /D _UNICODE /D UNICODE ^
+    /D _CRT_SECURE_NO_WARNINGS ^
+    /Fo"%DESTINATION_DIR%/" /Fe"%DESTINATION_DIR%/%EXE_NAME%.exe" %DEBUG_DATA% ^
+    "%EXE_NAME%.cpp" ^
     /link /INCREMENTAL:no ^
     /SUBSYSTEM:CONSOLE /MACHINE:X64 ^
     /LIBPATH:"../EngineDependencies/sqlite/lib/x64" ^
