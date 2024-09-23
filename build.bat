@@ -16,8 +16,8 @@ del *.idb > NUL 2> NUL
 cd ..\..\CharacterSimulation
 
 REM Copy data
-copy /y "settings.cfg" "..\build\simulation\settings.cfg"
-copy /y "..\EngineDependencies\sqlite\lib\x64\sqlite3.dll" "..\build\simulation\sqlite3.dll"
+copy /y /d "settings.cfg" "..\build\simulation\settings.cfg"
+copy /y /d "..\EngineDependencies\sqlite\lib\x64\sqlite3.dll" "..\build\simulation\sqlite3.dll"
 
 REM Use /showIncludes for include debugging
 
