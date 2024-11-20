@@ -3,14 +3,15 @@
 #include <time.h>
 #include <string.h>
 
-#include "../GameEngine/memory/Allocation.h"
 #include "../GameEngine/thread/Thread.h"
 #include "../GameEngine/stdlib/simd/SIMD_Helper.h"
 
 #if _WIN32
     #include "../GameEngine/platform/win32/UtilsWin32.h"
+    #include "../GameEngine/platform/win32/Allocation.h"
 #else
     #include "../GameEngine/platform/linux/UtilsLinux.h"
+    #include "../GameEngine/platform/linux/Allocation.h"
 #endif
 
 #include "SimulationDefinitions.h"
