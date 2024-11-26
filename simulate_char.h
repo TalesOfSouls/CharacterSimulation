@@ -59,9 +59,9 @@ void mutate_char_build(CharacterBuild* build, float mutation_rate, int step = 8)
 
     stat_points = 100;
 
-    build->char_points.secondary_stats.dmg_pircing = rands_f[6] <= mutation_rate
+    build->char_points.secondary_stats.dmg_piercing = rands_f[6] <= mutation_rate
         ? (uint16) (temp = (fast_rand1() % (stat_points + 1)))
-        : (uint16) (temp = (stat_points >= build->char_points.secondary_stats.dmg_pircing) ? build->char_points.secondary_stats.dmg_pircing : stat_points);
+        : (uint16) (temp = (stat_points >= build->char_points.secondary_stats.dmg_piercing) ? build->char_points.secondary_stats.dmg_piercing : stat_points);
     stat_points -= temp;
     build->char_points.secondary_stats.dmg_reflection = rands_f[7] <= mutation_rate
         ? (uint16) (temp = (fast_rand1() % (stat_points + 1)))

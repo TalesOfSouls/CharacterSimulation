@@ -8,7 +8,7 @@
 
 #if _WIN32
     #include "../GameEngine/platform/win32/UtilsWin32.h"
-    #include "../GameEngine/platform/win32/Allocation.h"
+    #include "../GameEngine/platform/win32/Allocator.h"
 #else
     #include "../GameEngine/platform/linux/UtilsLinux.h"
     #include "../GameEngine/platform/linux/Allocation.h"
