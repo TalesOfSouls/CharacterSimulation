@@ -7,10 +7,10 @@
 #include "../GameEngine/stdlib/simd/SIMD_Helper.h"
 
 #if _WIN32
-    #include "../GameEngine/platform/win32/UtilsWin32.h"
+    #include "../GameEngine/platform/win32/FileUtils.cpp"
     #include "../GameEngine/platform/win32/Allocator.h"
 #else
-    #include "../GameEngine/platform/linux/UtilsLinux.h"
+    #include "../GameEngine/platform/linux/FileUtils.cpp"
     #include "../GameEngine/platform/linux/Allocation.h"
 #endif
 
@@ -168,11 +168,7 @@ float simulate_fight() {
     return 1.0f;
 }
 
-#ifdef _WIN32
-static DWORD WINAPI thread_func(void *arg)
-#else
-void* thread_func(void* arg)
-#endif
+THREAD_RETURN thread_func(void* arg)
 {
     ThreadData* thr_data = (ThreadData*) arg;
     BuildResult* results = thr_data->results;
@@ -189,13 +185,13 @@ void* thread_func(void* arg)
 
     CharacterBuild* new_build;
     if (simd_step_size == 16) {
-        new_build = (CharacterBuild *) aligned_alloc(64, sizeof(CharacterBuild));
+        new_build = (CharacterBuild *) platform_alloc_aligned(sizeof(CharacterBuild), 64);
     } else if (simd_step_size == 8) {
-        new_build = (CharacterBuild *) aligned_alloc(32, sizeof(CharacterBuild));
+        new_build = (CharacterBuild *) platform_alloc_aligned(sizeof(CharacterBuild), 32);
     } else if (simd_step_size == 4) {
-        new_build = (CharacterBuild *) aligned_alloc(16, sizeof(CharacterBuild));
+        new_build = (CharacterBuild *) platform_alloc_aligned(sizeof(CharacterBuild), 16);
     } else {
-        new_build = (CharacterBuild *) calloc(1, sizeof(CharacterBuild));
+        new_build = (CharacterBuild *) platform_alloc_aligned(sizeof(CharacterBuild), 4);
     }
 
     for (int i = 0; i < thr_data->config->iterations; i++) {
@@ -239,11 +235,7 @@ void* thread_func(void* arg)
         }
     }
 
-    if (simd_step_size > 1) {
-        aligned_free(new_build);
-    } else {
-        free(new_build);
-    }
+    platform_aligned_free((void **) &new_build);
 
     pthread_exit(NULL);
 }
@@ -280,7 +272,7 @@ int main() {
     class_slot_equipment_types = (EquipmentType **) calloc(PLAYER_CLASS_SIZE * EQUIPMENT_SLOT_SIZE * 200, sizeof(EquipmentType *));
 
     // prepare data
-    BuildResult* results = (BuildResult *) playform_alloc(config.classes_count * config.ranking_size * sizeof(BuildResult));
+    BuildResult* results = (BuildResult *) platform_alloc(config.classes_count * config.ranking_size * sizeof(BuildResult));
 
     printf("\nBuild Count: %d\n", config.classes_count * config.ranking_size * config.iterations);
     printf("Cache Size: %d\n", (int) (config.classes_count * config.ranking_size * sizeof(BuildResult)));
