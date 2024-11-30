@@ -24,7 +24,7 @@ copy /y /d "..\EngineDependencies\sqlite\lib\x64\sqlite3.dll" "%DESTINATION_DIR%
 REM Use /showIncludes for include debugging
 
 set BUILD_TYPE=DEBUG
-set BUILD_FLAGS=/Od /Oi /Z7 /WX /FC /DDEBUG
+set BUILD_FLAGS=/Od /Z7 /WX /FC /RTC1 /DDEBUG
 
 set "DEBUG_DATA=/Fd"%DESTINATION_DIR%\%EXE_NAME%.pdb" /Fm"%DESTINATION_DIR%\%EXE_NAME%.map""
 
