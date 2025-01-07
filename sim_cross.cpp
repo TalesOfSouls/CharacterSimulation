@@ -4,15 +4,9 @@
 #include <string.h>
 
 #include "../GameEngine/thread/Thread.h"
-#include "../GameEngine/stdlib/simd/SIMD_Helper.h"
-
-#if _WIN32
-    #include "../GameEngine/platform/win32/FileUtils.cpp"
-    #include "../GameEngine/platform/win32/Allocator.h"
-#else
-    #include "../GameEngine/platform/linux/FileUtils.cpp"
-    #include "../GameEngine/platform/linux/Allocation.h"
-#endif
+#include "../GameEngine/stdlib/SIMD_Helper.h"
+#include "../GameEngine/system/Allocator.h"
+#include "../GameEngine/system/FileUtils.cpp"
 
 #include "SimulationDefinitions.h"
 #include "simulate_char.h"

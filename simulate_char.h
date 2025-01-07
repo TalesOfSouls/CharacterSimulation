@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 #include "SimulationDefinitions.h"
-#include "../GameEngine/stdlib/simd/SIMD_I32.h"
+#include "../GameEngine/stdlib/Simd.h"
 #include "../GameEngine/utils/Utils.h"
 
 void mutate_char_build(CharacterBuild* build, float mutation_rate, int step = 8) {
