@@ -4,7 +4,7 @@
 #include <string.h>
 
 #include "../GameEngine/thread/Thread.h"
-#include "../GameEngine/stdlib/SIMD_Helper.h"
+#include "../GameEngine/stdlib/SIMDHelper.h"
 #include "../GameEngine/system/Allocator.h"
 #include "../GameEngine/system/FileUtils.cpp"
 
