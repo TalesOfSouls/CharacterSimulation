@@ -3,18 +3,18 @@
 #include <time.h>
 #include <string.h>
 
-#include "../GameEngine/thread/Thread.h"
-#include "../GameEngine/stdlib/SIMDHelper.h"
-#include "../GameEngine/system/Allocator.h"
-#include "../GameEngine/system/FileUtils.cpp"
+#include "../cOMS/thread/Thread.h"
+#include "../cOMS/stdlib/SIMDHelper.h"
+#include "../cOMS/system/Allocator.h"
+#include "../cOMS/system/FileUtils.cpp"
 
 #include "SimulationDefinitions.h"
 #include "simulate_char.h"
 #include "simulate_item.h"
 
 #include "../GameServer/GameConsts.h"
-#include "../GameEngine/models/mob/player/_player_class.h"
-#include "../GameEngine/models/item/_equipment_slots.h"
+#include "../cOMS/models/mob/player/_player_class.h"
+#include "../cOMS/models/item/_equipment_slots.h"
 
 int simd_step_size;
 DatabaseConnection con;

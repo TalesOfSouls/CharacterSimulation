@@ -1,9 +1,9 @@
 #ifndef SIMULATION_DEFINITIONS_H
 #define SIMULATION_DEFINITIONS_H
 
-#include "../GameEngine/models/mob/MobStats.h"
-#include "../GameEngine/models/item/Equipment.h"
-#include "../GameEngine/models/mob/skill/Skill.h"
+#include "../cOMS/models/mob/MobStats.h"
+#include "../cOMS/models/item/Equipment.h"
+#include "../cOMS/models/mob/skill/Skill.h"
 
 #define MAX_ITEMS 3
 
